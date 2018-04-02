@@ -1,0 +1,266 @@
+数据存储
+===============
+
+存储机制
+--------------
+本系统存储采用文件+LevelDb构成，文件用来存放区块以及链信息，LevelDB存放索引信息以及WorldState信息。
+
+系统创建及初始化
++++++++++++++++++++
+1. 多实例存储机制，主要支持交易的与执行
+2. 单实例存储机制，主要支持数据的持久化与API接口
+
+存储内容
++++++++++
+1. LevelDB存储索引
+2. File System存储区块
+
+Merkle计算
++++++++++++++++
+1. Merkle计算的原则采用增量方式，目的是减少内存和CPU的占用。
+2. Merkle计算方法是：首先计算当前块的Worldstate的Hash256，然后连接上一个块计算的Merkle值，再次计算Hash256，即为当前的Merkle值。
+
+存储功能
+++++++++++
+1. 单实例的LevelDB操作需要支持事务机制，包含提交与回滚
+2. 支持区块的读写
+3. 支持WorldState的读写
+4. 支持Merkle的计算
+5. 支持外部检索
+6. 支持读写集的校验
+
+存储结构
+--------------
+
+.. image:: ./images/chapter7/pic1.png
+   :scale: 50
+   :height: 1094
+   :width: 1499
+   :alt: 存储结构图
+
+存储类
+--------------
+
+LevelDB
++++++++++
+接口类，描述公共对外访问的全局方法，包括以下方法：
+
+	1. 从系统获取某个键对应的值::
+	
+		def	Get(key : String):Array[Byte]
+		
+	2. 存储某个键的值到系统::
+	
+		def	Put (key : String,bb : Array[Byte]):Boolean
+		
+	3. 从系统中删除某个键的值，目前没有实现，因为RepChain不允许删除::
+	
+		def  Delete (key : String) : Boolean
+		
+	4. 把某个字节的值转为字符串::
+	
+		def  toString(b : Array[Byte]):String
+		
+	5. 把某个字节的值转为长整型::
+	
+		def  toLong(b : Array[Byte]):Long
+		
+	6. 把某个字节的值转为整型::
+	
+		def  toInt(b : Array[Byte]):Int
+		
+	7. 打印某个map的数据::
+	
+		def  printlnHashMap(map : mutable.HashMap[String,Array[Byte]])
+		
+	8. 获取当前的系统名称::
+	
+		def  getSystemName:String
+		
+	9. 获取当前实例的名称::
+	
+		def  getInstanceName:String
+		
+	10. 获取当前增量的Merkle的字节值::
+	
+		def  GetComputeMerkle:Array[Byte]
+		
+	11. 获取当前增量的Merkle的字符串值::
+	
+		def  GetComputeMerkle4String:String
+	
+AbstractLevelDB
++++++++++++++++++
+该类实现公共方法，实现的方法有：toString，toLong，toInt，PrintlnHashMap，GetComputeMerkle，getComputMerkle4String。
+	
+	该类新增以下两个方法，这两个方法属于保护类型，外部不需要调用：
+	
+	1. protected  def	ReloadMerkle  初始化时装载上一个块的Merkle值
+  	2. protected  def	PutWorldStateToMerkle(key:String,value:Array[Byte]) 系统WorldState改变时自动修改Merle值
+
+IDataAccess
++++++++++++++++
+该类实现LevelDB数据库的操作，并且添加外部操作定义。
+	数据库操作方法有：
+	
+	1. 实现系统名称的获取::
+	
+		override def   getSystemName:String	
+		
+	2. 实现当前实例的获取::
+	
+		override def getInstanceName:String
+	
+	3. 实现是否开启事务::
+	
+		def IsBeginTrans : Boolean	
+		
+	4. 实现开启事务::
+	
+		def BeginTrans  
+		
+  	5. 私有方法，保存Merkle值，内部自动调用::
+	
+		private	  def SaveMerkle
+		   
+	6. 实现事务提交::
+	
+		def  CommitTrans	
+		
+	7. 实现事务回滚::
+	
+		def  RollbackTrans
+		
+	8. 实现指定键值的获取::
+	
+		override def Get(key : String):Array[Byte]	
+		
+	9. 实现存储指定键值的存储到数据库::
+	
+		override def Put (key : String,bb : Array[Byte]):Boolean
+		
+	10. 暂时不实现::
+	
+		override def Delete (key : String) : Boolean	
+		
+	11. 实现键值的模糊查询（指定模糊匹配方法，前端一致，后端一致，包含）::
+	
+		def  FindByLike(searchkey : String,searchmode : Int):mutable.HashMap[String,Array[Byte]]	
+		
+	12. 实现键的模糊查询::
+	
+		def FindKeyByLike(searchkey : String,searchmode : Int):Array[String]	
+		
+	13. 实现前端一致模糊匹配查询::
+	
+		def FindByLike(searchkey : String):mutable.HashMap[String,Array[Byte]]
+		
+	
+	外部操作方法定义：
+		1. //通过block Hash值获取Block::
+		
+			def getBlockByBase64Hash(base64:String):Array[Byte]
+			
+		2. //根据block的hash值获取block::
+		
+			def getBlockByHash(bh:String):Array[Byte]
+			
+		3. //根据交易id获取这个交易隶属的block::
+		
+			def getBlockByTxId(bh:String):Array[Byte]
+			
+		4. //根据链的高度来获取等于这个高度值的block::
+		
+			def getBlockByHeight(h:Long):Array[Byte]
+			
+		5. //从某个高度开始（包含这个高度）的所有块取出来，h：开始的高度，h 必须大于0，高度是从1开始
+		
+		   //limits 返回块的数量，默认值为0，如果大于0，返回指定数量的块，如果块数小于该值返回实际数量
+		
+		   //默认最多1000条::
+		
+			def getBlocksFromHeight(h:Int,limits:Int):Array[Array[Byte]]
+		
+		6. //根据高度获取block::
+		
+			def getBlocksFromHeight(h:Int):Array[Array[Byte]]
+			
+		7. //根据高度获取多个Block::
+		
+			def getBlocks4ObjectFromHeight(h:Int,limits:Int):Array[Block]
+			
+		8. //根据高度获取所有Block::
+		
+			def getBlocks4ObjectFromHeight(h:Int):Array[Block]
+			
+		9. //根据链的高度来获取等于这个高度值的block::
+		
+			def getBlock4ObjectByHeight(h:Long):Block
+			
+		10. //获取区块链信息::
+		
+			def getBlockChainInfo():BlockchainInfo
+			
+		11. //返回成功写入的块数，写入多个区块::
+		
+			def  restoreBlocks(blocks:Array[Block]):Int
+			
+		12. //写入单个区块::
+		
+			def  restoreBlock(block:Block):Boolean
+			
+  		13. //获取链码的高度::
+		
+			def getBlockHeight():Long
+			
+		14. //获取系统的所有交易数量::
+		
+			def getBlockAllTxNumber():Long
+			
+		15. //获取当前的区块文件编号::
+		
+			def getMaxFileNo():Int
+		
+ImpDataAccess
++++++++++++++++++
+		实现IDataAccess定义的外部操作方法。
+		
+ImpDataPreload
++++++++++++++++++++++
+	实现LevelDB数据的快照（内存数据）操作方法，增加背书时针对读写指令集的验证以及多个实例的管理。
+	
+	增加的背书验证方法：
+	
+	1. 从区块中获取指定交易对应链码id::
+	
+		private def getTxidFormBlock(block:Block,txid:String):String	
+		
+	2. 验证指令集函数::
+	
+		def  VerifyForEndorsement(block:Block):Boolean
+		
+		
+	多实例管理类：
+	
+	MultiDBMgr存储所有的动态预执行操作实例，所有实例被存储在map结构中，该类会自动管理这些实例，如果没有被Free，MultiDBMgr会自动Free超过一分钟没有操作的实例。
+
+BlockHelp
+++++++++++++
+该类属于单实例类，负责文件系统操作，读写区块信息。
+
+	1. 获取当前区块文件长度::
+	
+		public long  getFileLength(long fileno)throws Exception	
+		
+	2. 判断是否需要新生成一个区块文件::
+	
+		public boolean  isAddFile(long fileno,int blength)throws Exception	
+		
+	3. 指定位置读取某个区块::
+	
+		public byte[] readBlock(long fileno,long startpos,int length)throws Exception
+			
+	4. 指定位置写入某个区块::
+	
+		public boolean writeBlock(long fileno,long startpos,byte[] bb)throws Exception
+		

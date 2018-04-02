@@ -1,0 +1,198 @@
+快速入门
+=================
+
+本章将带你快速搭建一个repChain运行环境，通过实际运行了解repChain的架构原理。最后通过一个简单的chaincode来展示chaincode的部署及调用。
+
+前提
+-----------
+
+完成以下安装，并正确配置环境变量：
+
+*	JDK1.8+
+
+*	Python2.7及以上版本
+
+*	安装Scala环境
+
+*	安装sbt工具
+
+*	安装scala IDE
+
+*	安装keystore-explorer ——用于生成密钥对的工具,非必须
+
+*	安装protobuf editor——编辑protobuf定义工具，非必须
+
+执行脚本
+-------------
+**Linux下执行**
+
+*	拉取repChain源码
+
+.. code-block:: python
+	:linenos:
+
+	git clone https://gitee.com/chen4w/repchain.git
+
+
+*	编译protobuf定义
+
+将本地的protobuf生成scala类。在repchain目录执行以下命令：
+
+.. code-block:: python
+    :linenos:
+
+	# 使用root账户
+	sudo -i
+	
+	# 进入repchain目录
+	cd $path/repchain
+	
+	# 启动sbt
+	sbt
+	
+	# 编译protobuf文件
+	compile
+
+在启动sbt和编译的时候都会下载依赖包，若依赖包不完整将导致编译失败或之后不能正确运行。
+
+*	启动repchain
+
+在repchain编译无误后执行sbt的run命令即可启动repchain。repchain启动后会在终端持续输出日志。
+
+*	访问实时运行图像：http://localhost:8081/web/g1.html
+
+*	访问swaggerui API：http://localhost:8081/swagger/index.html
+
+repchain运行后会自动在repchain所在根目录生成Users文件夹，其中包含leveldbdata和blockdata
+
+启动网络
+-----------------
+.. code-block:: java
+	:linenos:
+
+	cluster {
+		//种子节点
+	   seed-nodes = ["akka.ssl.tcp://Repchain@192.168.100.93:8082"]
+	   #"akka.tcp://repChain@192.168.1.17:64426"]
+		  }
+
+查看交易
+---------------
+交易是指对智能合约的部署、调用，以及对账本map（world state）的查询，因此交易定义的基础是对智能合约的定义。
+
+查看日志
+--------------
+repChain提供日志可视化展示。
+
+手动交易和自动交易
+----------------------
+
+.. code-block:: python
+	:linenos:
+
+	system {
+	  //api是否开启
+	  //如果是单机多节点测试模式（Repchain，则选择0，默认节点1会开启）
+	  ws_enable = 1//api 0,不开启;1,开启
+	  //交易生产方式
+	  trans_create_type = 1 //0,手动;1,自动
+	  //是否进行TPS测试
+	  statistic_enable = 1 // 0,unable;able
+
+区块
+------------
+区块是对交易打包，确认之后写入链，成为不可更改的数据链。
+
+区块背书
++++++++++
+共识选秀胜出者打包区块，并向其他代表请求背书
+
+.. code-block:: python
+	:linenos:
+
+	message Endorsement {
+		// Identity of the endorser (e.g. its certificate)
+		bytes endorser = 1;
+		// Signature of the payload included in ProposalResponse concatenated with
+		// the endorser's certificate; ie, sign(ProposalResponse.payload + endorser)
+		bytes signature = 2;
+	}
+	
+endorser：背书者证书
+signature：背书者签名
+
+区块
+++++++++
+
+.. code-block:: python
+	:linenos:
+
+	message Block {
+		google.protobuf.Timestamp timestamp = 2;
+		repeated Transaction transactions = 3;
+		bytes stateHash = 4;
+		bytes previousBlockHash = 5;
+		repeated Endorsement consensusMetadata=6;
+	}
+	
+timestamp：出块时间戳，收集足够背书之后，广播出块时的时间
+transactions：本区块包含的交易序列
+stateHash：本区块执行结束的world state的hash
+previousBlockHash：前一个区块的hash
+consensusMetadata：收集到的背书序列
+
+区块同步
+------------------
+节点入网之后，会检查本地区块高度是否与全网的区块高度一致，如果不一致，需要进行区块同步。
+
+区块请求
+++++++++++
+用于向其他peer发出区块同步请求（？？？向谁发起——区块广播者？，如何获得全网的区块高度）
+
+.. code-block:: python
+	:linenos:
+
+	message SyncBlockRange {
+		uint64 correlationId = 1;
+		uint64 start = 2;
+		uint64 end = 3;
+	}
+	
+correlationId：用于收到响应时与发出的请求对应的id
+start：起始区块位置，从1开始
+end：结束区块位置
+
+区块同步
++++++++++++++
+用于回应区块同步请求（谁回应？——区块广播者）除了包含请求信息，还包括区块序列。
+
+.. code-block:: python
+	:linenos:
+
+	message SyncBlocks {
+		SyncBlockRange range = 1;
+		repeated Block blocks = 2;
+	}
+	
+range：对应的请求信息
+blocks：区块序列
+
+组网
+--------------
+.. code-block:: java
+	:linenos:
+
+	cluster {
+	  //种子节点
+	   seed-nodes = ["akka.ssl.tcp://Repchain@192.168.100.93:8082"]
+	   #"akka.tcp://repChain@192.168.1.17:64426"]
+		  }
+	  //组网是进行布置节点信息,组网时进行开启cluster
+		  cluster {
+		   //种子节点
+		  seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
+						  "akka.ssl.tcp://Repchain@192.168.2.65:8082",
+						  "akka.ssl.tcp://Repchain@192.168.2.27:8082",
+						  "akka.ssl.tcp://Repchain@192.168.2.30:8082"]
+						   #"akka.tcp://repChain@192.168.1.17:64426"]
+		   }   
