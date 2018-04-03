@@ -5,7 +5,7 @@
 
 .. _index:
 
-repChain中文文档!
+RepChain中文文档
 ===================
 
 .. toctree::
