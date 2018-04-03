@@ -48,9 +48,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'repChain中文文档'
+project = u'RepChain中文文档'
 copyright = u'2018, ISCAS&GAIT'
-author = u'ISCAS&GAIT'
+author = u'中科院软件研究所，贵阳信息技术研究院'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
