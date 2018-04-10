@@ -26,4 +26,7 @@ repChain致力于开源社区的建设，集思广益，大家在使用过程中
 
 在阅读《repChain中文文档的》的过程中，如果您有任何的疑问，均可通过下方的联系方式获取帮助。另外，文档的编写难免有疏忽之处，如果您在阅读过程中发现任何错误或不足之处，请邮件联系我们批评指正！
 
-  邮箱：longshuai@iscas.ac.cn, daiyongbing@gy.iscas.ac.cn
+  
+  郑老师：longshuai@iscas.ac.cn, 
+  
+  代永兵：daiyongbing@gy.iscas.ac.cn
