@@ -141,7 +141,7 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.4 手动交易和自动交易
 -----------------------------
 
-在进行交易时，可以设置手动和自动两种方式，手动时需要用户自己来操作产生交易，而自动交易在开启网络之后各节点会自动产生交易。
+	在进行交易时，可以设置手动和自动两种方式，手动时需要用户自己来操作产生交易，而自动交易在开启网络之后各节点会自动产生交易。
 
 .. code-block:: java
    :linenos:
@@ -166,7 +166,7 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.5.1 区块背书
 ++++++++++++++++++
 
-共识选秀胜出者打包区块，并向其他代表请求背书
+	共识选秀胜出者打包区块，并向其他代表请求背书
 
 	.. code-block:: java
 	   :linenos:
@@ -186,16 +186,16 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.5.2 区块
 +++++++++++++++
 
-	.. code-block:: java
-	   :linenos:
-	   
-		message Block {
-			google.protobuf.Timestamp timestamp = 2;
-			repeated Transaction transactions = 3;
-			bytes stateHash = 4;
-			bytes previousBlockHash = 5;
-			repeated Endorsement consensusMetadata=6;
-		}
+.. code-block:: java
+   :linenos:
+
+	message Block {
+		google.protobuf.Timestamp timestamp = 2;
+		repeated Transaction transactions = 3;
+		bytes stateHash = 4;
+		bytes previousBlockHash = 5;
+		repeated Endorsement consensusMetadata=6;
+	}
    
 	**timestamp:** 出块时间戳，收集足够背书之后，广播出块时的时间
    
