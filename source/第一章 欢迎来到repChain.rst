@@ -28,4 +28,4 @@ repChain致力于开源社区的建设，集思广益，大家在使用过程中
 
    邮箱：longshuai@iscas.ac.cn
    
-        daiyongbing@gy.iscas.ac.cn
+         daiyongbing@gy.iscas.ac.cn
