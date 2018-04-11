@@ -111,13 +111,6 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.3.1 检查点
 +++++++++++++++
 
-激励机制功能测试
-
-* 发行机制功能测试
-	测试内容：区块链产品应支持一种或多种激励（资产）发行机制。
-* 分配机制功能测试
-	测试内容：区块链产品应支持一种或多种激励（资产）分配机制。
-	
 .. image:: ./images/chapter4/4.3.1.png
    :scale: 50
    :height: 1153
@@ -222,16 +215,16 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.6.1 请求区块
 ++++++++++++++++++
 
-用于向其他peer发出区块同步请求，在作为新节点入网之后，在请求同步的同时会产生广播，老节点会随机与之响应进行同步。
+	用于向其他peer发出区块同步请求，在作为新节点入网之后，在请求同步的同时会产生广播，老节点会随机与之响应进行同步。
 
-	.. code-block:: java
-	   :linenos:
-	   
-		message SyncBlockRange {
-			uint64 correlationId = 1;
-			uint64 start = 2;
-			uint64 end = 3;
-		}
+.. code-block:: java
+	:linenos:
+
+	message SyncBlockRange {
+		uint64 correlationId = 1;
+		uint64 start = 2;
+		uint64 end = 3;
+	}
 	
 	**correlationId:** 用于收到响应时与发出的请求对应的id
 
@@ -259,15 +252,15 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.7 组网
 ------------
 
-	.. code-block:: java
-	   :linenos:
-	   
-		cluster {
-			//组网是进行布置节点信息,组网时进行开启cluster
-			//种子节点
-			seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
-							"akka.ssl.tcp://Repchain@192.168.2.65:8082",
-							"akka.ssl.tcp://Repchain@192.168.2.27:8082",
-							"akka.ssl.tcp://Repchain@192.168.2.30:8082"]
-							#"akka.tcp://repChain@192.168.1.17:64426"]
-		}
+.. code-block:: java
+   :linenos:
+
+	cluster {
+		//组网是进行布置节点信息,组网时进行开启cluster
+		//种子节点
+		seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
+						"akka.ssl.tcp://Repchain@192.168.2.65:8082",
+						"akka.ssl.tcp://Repchain@192.168.2.27:8082",
+						"akka.ssl.tcp://Repchain@192.168.2.30:8082"]
+						#"akka.tcp://repChain@192.168.1.17:64426"]
+	}
