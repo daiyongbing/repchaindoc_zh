@@ -252,15 +252,15 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.7 组网
 ------------
 
-.. code-block:: java
-   :linenos:
+	.. code-block:: java
+	   :linenos:
 
-	cluster {
-		//组网是进行布置节点信息,组网时进行开启cluster
-		//种子节点
-		seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
-						"akka.ssl.tcp://Repchain@192.168.2.65:8082",
-						"akka.ssl.tcp://Repchain@192.168.2.27:8082",
-						"akka.ssl.tcp://Repchain@192.168.2.30:8082"]
-						#"akka.tcp://repChain@192.168.1.17:64426"]
-	}
+		cluster {
+			//组网是进行布置节点信息,组网时进行开启cluster
+			//种子节点
+			seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
+							"akka.ssl.tcp://Repchain@192.168.2.65:8082",
+							"akka.ssl.tcp://Repchain@192.168.2.27:8082",
+							"akka.ssl.tcp://Repchain@192.168.2.30:8082"]
+							#"akka.tcp://repChain@192.168.1.17:64426"]
+		}
