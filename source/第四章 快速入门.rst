@@ -4,19 +4,13 @@
 4.1 前期准备
 ----------------
 
-*	JDK1.8+
-
-*	Python2.7及以上版本
-
-*	安装Scala环境
-
-*	安装sbt工具
-
-*	安装scala IDE
-
-*	安装keystore-explorer ——用于生成密钥对的工具,非必须
-
-*	安装protobuf editor——编辑protobuf定义工具，非必须
+	* JDK1.8+
+	* Python2.7及以上版本
+	* 安装Scala环境
+	* 安装sbt工具
+	* 安装scala IDE
+	* 安装keystore-explorer ——用于生成密钥对的工具,非必须
+	* 安装protobuf editor——编辑protobuf定义工具，非必须
 
 
 	**组网:** 去中心化分布式网络
@@ -41,72 +35,71 @@
 4.2 查看交易
 ------------------
 
-交易是指导致账本状态改变的一个操作，不限于转账交易，交易定义的基础是对智能合约的定义。
+	交易是指导致账本状态改变的一个操作，不限于转账交易，交易定义的基础是对智能合约的定义。
 
 4.2.1 交易密级
 ++++++++++++++++
 
-枚举型选项，描述交易是否公开
+	枚举型选项，描述交易是否公开
 
-.. code-block:: java
-   :linenos:
-   
-	enum ConfidentialityLevel {
-		PUBLIC = 0;
-		CONFIDENTIAL = 1;
-	}
-	
+	.. code-block:: java
+	   :linenos:
+	   
+	   enum ConfidentialityLevel {
+			PUBLIC = 0;
+			CONFIDENTIAL = 1;
+		}
 
 4.2.2 交易
 ++++++++++++++++
 
-.. code-block:: java
-   :linenos:
-   
-	message Transaction {
-		enum Type {
-			UNDEFINED = 0;
-			// deploy a chaincode to the network and call `Init` function
-			CHAINCODE_DEPLOY = 1;
-			// call a chaincode `Invoke` function as a transaction
-			CHAINCODE_INVOKE = 2;
-			// call a chaincode `query` function
-			CHAINCODE_QUERY = 3;
-			// terminate a chaincode; not implemented yet
-			CHAINCODE_TERMINATE = 4;
+	.. code-block:: protobuf
+	   :linenos:
+	   
+	   message Transaction {
+			enum Type {
+				UNDEFINED = 0;
+				// deploy a chaincode to the network and call `Init` function
+				CHAINCODE_DEPLOY = 1;
+				// call a chaincode `Invoke` function as a transaction
+				CHAINCODE_INVOKE = 2;
+				// call a chaincode `query` function
+				CHAINCODE_QUERY = 3;
+				// terminate a chaincode; not implemented yet
+				CHAINCODE_TERMINATE = 4;
+			}
+			Type type = 1;
+			//store ChaincodeID as bytes so its encrypted value can be stored
+			string chaincodeID = 2;
+			ChaincodeSpec payload=3;
+			string txid = 4;
+			google.protobuf.Timestamp timestamp = 5;
+			ConfidentialityLevel confidentialityLevel = 6;
+			bytes cert = 7;
+			bytes signature = 8;
 		}
-		Type type = 1;
-		//store ChaincodeID as bytes so its encrypted value can be stored
-		string chaincodeID = 2;
-		ChaincodeSpec payload=3;
-		string txid = 4;
-		google.protobuf.Timestamp timestamp = 5;
-		ConfidentialityLevel confidentialityLevel = 6;
-		bytes cert = 7;
-		bytes signature = 8;
-	}
 
-**type:** 交易类型，枚举交易是部署、调用合约或者检索world state
+	**type:** 交易类型，枚举交易是部署、调用合约或者检索world state
 
-**chaincodeID:** 链码id，采用链码代码的hash
+	**chaincodeID:** 链码id，采用链码代码的hash
 
-**payload:** 调用的具体内容
+	**payload:** 调用的具体内容
 
-**txid:** 本地生成的交易唯一id
+	**txid:** 本地生成的交易唯一id
 
-**timestamp:** 形成的交易本地时间戳
+	**timestamp:** 形成的交易本地时间戳
 
-**confidentialityLevel:** 交易密级
+	**confidentialityLevel:** 交易密级
 
-**cert:** 发起交易者的证书二进制块
+	**cert:** 发起交易者的证书二进制块
 
-**signature:** 发起交易者对交易的签名
+	**signature:** 发起交易者对交易的签名
 
 4.3 查看日志
 -----------------
 
-repChain提供日志可视化展示。可视化的目的在于以直观的方式将系统的实时状态和日志信息展示给人工用户。
-可视化模块从系统中收集运行日志，本模块负责向其他模块提出日志需求。
+	repChain提供日志可视化展示。可视化的目的在于以直观的方式将系统的实时状态和日志信息展示给人工用户。
+	可视化模块从系统中收集运行日志，本模块负责向其他模块提出日志需求。
 
 4.3.1 检查点
 +++++++++++++++
@@ -120,12 +113,12 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.3.2 问题
 ++++++++++++++++
 
-**如何从系统各模块实时收集、事后调取日志？**
+	**如何从系统各模块实时收集、事后调取日志？**
 
 	——在Akka Cluster建立log topic，本地peer向集群内广播日志，展示peer订阅log topic，获取日志，
 	通过akka http支持的websocket推送到web前端，并用于实时图形展示。
 
-**以何种图示化形式展示、回放这些日志？**
+	**以何种图示化形式展示、回放这些日志？**
 
 	——图形展示形式如上图所示：大圆代表cluster，每个peer位于圆周上均匀分布；圆周内圆圈代表topic，
 	内圆面积表示topic规模；peer颜色代表不同类型（候选人、代理人、展示peer）。Peer对内圆topic的指向代表订阅关系；
@@ -134,7 +127,7 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 	由于集群中Peer数目可以比较大（1000+），可以从出块开始，只显示随机抽中的代表节点、发出交易的代理节点、动态展示交易打包过程，
 	背书共识过程、出块广播过程
 
-**风险告警包括哪些情况？**
+	**风险告警包括哪些情况？**
 
 	——收到无效背书、无效区块，将sender标红。
 	
@@ -143,20 +136,20 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 
 	在进行交易时，可以设置手动和自动两种方式，手动时需要用户自己来操作产生交易，而自动交易在开启网络之后各节点会自动产生交易。
 
-.. code-block:: java
-   :linenos:
-   
-	system {
-	  //api是否开启
-	  //如果是单机多节点测试模式（Repchain，则选择0，默认节点1会开启）
-	  ws_enable = 1//api 0,不开启;1,开启
-	  
-	  //交易生产方式
-	  trans_create_type = 1 //0,手动;1,自动
-	  
-	  //是否进行TPS测试
-	  statistic_enable = 1 // 0,unable;able
-	}
+	.. code-block:: scala
+	   :linenos:
+	   
+	   system {
+		  //api是否开启
+		  //如果是单机多节点测试模式（Repchain，则选择0，默认节点1会开启）
+		  ws_enable = 1//api 0,不开启;1,开启
+		  
+		  //交易生产方式
+		  trans_create_type = 1 //0,手动;1,自动
+		  
+		  //是否进行TPS测试
+		  statistic_enable = 1 // 0,unable;able
+		}
 	
 4.5 区块
 -------------
@@ -168,10 +161,10 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 
 	共识选秀胜出者打包区块，并向其他代表请求背书
 
-	.. code-block:: java
+	.. code-block:: protobuf
 	   :linenos:
 	   
-		message Endorsement {
+	   message Endorsement {
 			// Identity of the endorser (e.g. its certificate)
 			bytes endorser = 1;
 			// Signature of the payload included in ProposalResponse concatenated with
@@ -186,16 +179,16 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.5.2 区块
 +++++++++++++++
 
-.. code-block:: java
-   :linenos:
-
-	message Block {
-		google.protobuf.Timestamp timestamp = 2;
-		repeated Transaction transactions = 3;
-		bytes stateHash = 4;
-		bytes previousBlockHash = 5;
-		repeated Endorsement consensusMetadata=6;
-	}
+	.. code-block:: scala
+	   :linenos:
+	   
+	   message Block {
+			google.protobuf.Timestamp timestamp = 2;
+			repeated Transaction transactions = 3;
+			bytes stateHash = 4;
+			bytes previousBlockHash = 5;
+			repeated Endorsement consensusMetadata=6;
+		}
    
 	**timestamp:** 出块时间戳，收集足够背书之后，广播出块时的时间
    
@@ -217,14 +210,14 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 
 	用于向其他peer发出区块同步请求，在作为新节点入网之后，在请求同步的同时会产生广播，老节点会随机与之响应进行同步。
 
-.. code-block:: java
-	:linenos:
-
-	message SyncBlockRange {
-		uint64 correlationId = 1;
-		uint64 start = 2;
-		uint64 end = 3;
-	}
+	.. code-block:: scala
+		:linenos:
+		
+		message SyncBlockRange {
+			uint64 correlationId = 1;
+			uint64 start = 2;
+			uint64 end = 3;
+		}
 	
 	**correlationId:** 用于收到响应时与发出的请求对应的id
 
@@ -237,10 +230,10 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 
 	用于回应区块同步请求，除了包含请求信息，还包括区块序列，区块同步之后的效果是全网的区块高度相同。
 
-	.. code-block:: java
+	.. code-block:: scala
 	   :linenos:
 	   
-		message SyncBlocks {
+	   message SyncBlocks {
 			SyncBlockRange range = 1;
 			repeated Block blocks = 2;
 		}
@@ -252,15 +245,16 @@ repChain提供日志可视化展示。可视化的目的在于以直观的方式
 4.7 组网
 ------------
 
-	.. code-block:: java
+	.. code-block:: yaml
 	   :linenos:
-
-		cluster {
-			//组网是进行布置节点信息,组网时进行开启cluster
-			//种子节点
-			seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
-							"akka.ssl.tcp://Repchain@192.168.2.65:8082",
-							"akka.ssl.tcp://Repchain@192.168.2.27:8082",
-							"akka.ssl.tcp://Repchain@192.168.2.30:8082"]
-							#"akka.tcp://repChain@192.168.1.17:64426"]
+	   
+	   cluster {
+	   
+	    //组网是进行布置节点信息,组网时进行开启cluster
+		//种子节点
+		seed-nodes = ["akka.ssl.tcp://Repchain@192.168.2.88:8082",
+					"akka.ssl.tcp://Repchain@192.168.2.65:8082",
+					"akka.ssl.tcp://Repchain@192.168.2.27:8082",
+					"akka.ssl.tcp://Repchain@192.168.2.30:8082"]
+					#"akka.tcp://repChain@192.168.1.17:64426"]
 		}
