@@ -23,7 +23,7 @@
 
 	**输出共识:** worldState的merkle结果背书
 
-	**智能合约:** 支持javaScript的Sandbox
+	**智能合约:** 支持javaScript和scala的Sandbox
 
 	**存储:** key-value存储+文件索引
 
