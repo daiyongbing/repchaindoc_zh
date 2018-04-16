@@ -28,9 +28,7 @@
 
 	邮箱：longshuai@iscas.ac.cn，daiyongbing@gy.iscas.ac.cn
 
-	注: 1.若您对已经对区块链有了解，建议您从“协议规范”开始阅读。
-            2.若您想直接搭建系统，建议您从“repChain操作指南”开始阅读。
-            3.若您想基于repChain做应用开发，建议参考“repChain应用开发”。
+	注: 1.若您对已经对区块链有了解，建议您从“协议规范”开始阅读。<br>2.若您想直接搭建系统，建议您从“repChain操作指南”开始阅读。<br>3.若您想基于repChain做应用开发，建议参考“repChain应用开发”。
     
     
     
