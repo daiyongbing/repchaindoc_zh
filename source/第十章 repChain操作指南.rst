@@ -6,6 +6,7 @@ repChain操作指南
 
 	* git clone https://gitee.com/chen4w/repchain
 	* install jdk8+
+	* install python
 	* install Scala
 	* install SBT
 	* install scala IDE
