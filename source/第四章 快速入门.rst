@@ -263,8 +263,8 @@
 ----------------
 4.8.1 实时图
 ++++++++++++++++
-	实时图显示了每个节点peer之间的动态关系，发生交易、背书，出块等动作，可以实时的显示出每一步流程，使得节点之间的资产转移可以直观的进行显示。		**访问网址:** http://localhost:8081/web/g1.html
+	实时图显示了每个节点peer之间的动态关系，发生交易、背书，出块等动作，可以实时的显示出每一步流程，使得节点之间的资产转移可以直观的进行显示。		访问网址： http://localhost:8081/web/g1.html
 	
 4.8.2 Swagger-UI
 ++++++++++++++++
-	Swagger是一个Restful风格接口的文档在线自动生成和测试的框架。原理是Swagger-ui读取的数据来源于/v2/api-docs，并且返回的是json数据。所以只要自己写一个页面去解析json数据，并展现就可以实现自定义swagger的UI界面了。										**访问网址:** http://localhost:8081/swagger/index.html
+	Swagger是一个Restful风格接口的文档在线自动生成和测试的框架。原理是Swagger-ui读取的数据来源于/v2/api-docs，并且返回的是json数据。所以只要自己写一个页面去解析json数据，并展现就可以实现自定义swagger的UI界面了。										访问网址： http://localhost:8081/swagger/index.html
