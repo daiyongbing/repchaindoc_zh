@@ -299,3 +299,15 @@
 4.8.2 Swagger-UI
 ++++++++++++++++
 	Swagger是一个Restful风格接口的文档在线自动生成和测试的框架。原理是Swagger-ui读取的数据来源于/v2/api-docs，并且返回的是json数据。所以只要自己写一个页面去解析json数据，并展现就可以实现自定义swagger的UI界面了。										访问网址： http://localhost:8081/swagger/index.html
+ 
+        .. image:: ./images/chapter4/Swagger-UI.png
+           :scale: 50
+  	   :height: 1153
+           :width: 1387
+           :alt: 消息流
+	   
+	使用方式：
+1.	引入jar包，引入swagger的包；
+2.	启用swagger，创建SwaggerConfig文件；
+3.	添加swagger注解；
+4.	添加自定义UI界面。
