@@ -272,7 +272,30 @@
            :width: 1387
            :alt: 消息流
 
+	有以下几个topic：
 	
+	repChain：统计交易节点的个数；
+	
+	Transaction：节点间发生交易请求；
+	
+	Endorsement：节点需要背书；
+	
+	Block：交易达成出块；
+	
+	Sync：当新加入的节点跟已有节点区块高度不一致时发出同步请求。
+	
+	其中，红曲线表示发出请求，绿直线表示响应请求。Peer颜色代表代表不同类型的节点，比如候选节点、代理节点和展示节点。Peer向topic的指向代表订阅关	    系，在向topic发送消息时用延时线条表示，同时peer之间发送消息时也用延时线条表示。这些动态可以直观地将交易打包过程、背书共识过程、出块广播过程         展示出来。
+	
+	以d3.js的force layout可以实现如下图效果：
+
+        .. image:: ./images/chapter4/d3.png
+           :scale: 50
+  	   :height: 1153
+           :width: 1387
+           :alt: 消息流
+   
+   其中c0为中心点（fixed），c1～cn为沿圆周自动均匀分布的集群入网节点。t1~t2为订阅主题（fixed），c1-t1，c3-t1为不参与force layout的圆弧带箭头连接。
+
 4.8.2 Swagger-UI
 ++++++++++++++++
 	Swagger是一个Restful风格接口的文档在线自动生成和测试的框架。原理是Swagger-ui读取的数据来源于/v2/api-docs，并且返回的是json数据。所以只要自己写一个页面去解析json数据，并展现就可以实现自定义swagger的UI界面了。										访问网址： http://localhost:8081/swagger/index.html
