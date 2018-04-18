@@ -306,8 +306,7 @@
            :width: 1387
            :alt: 消息流
 	   
-	使用方式：
-	
+	使用方式：	
 1.	引入jar包，引入swagger的包；
 2.	启用swagger，创建SwaggerConfig文件；
 3.	添加swagger注解；
