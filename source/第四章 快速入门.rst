@@ -305,7 +305,7 @@
   	   :height: 1153
            :width: 1387
            :alt: 消息流
-	   
+	
 	使用方式：	
 1.	引入jar包，引入swagger的包；
 2.	启用swagger，创建SwaggerConfig文件；
