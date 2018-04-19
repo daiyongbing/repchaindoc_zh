@@ -166,67 +166,67 @@
 		
 	
 	外部操作方法定义：
-		1. //通过block Hash值获取Block::
+		1. 通过block Hash值获取Block::
 		
 			def getBlockByBase64Hash(base64:String):Array[Byte]
 			
-		2. //根据block的hash值获取block::
+		2. 根据block的hash值获取block::
 		
 			def getBlockByHash(bh:String):Array[Byte]
 			
-		3. //根据交易id获取这个交易隶属的block::
+		3. 根据交易id获取这个交易隶属的block::
 		
 			def getBlockByTxId(bh:String):Array[Byte]
 			
-		4. //根据链的高度来获取等于这个高度值的block::
+		4. 根据链的高度来获取等于这个高度值的block::
 		
 			def getBlockByHeight(h:Long):Array[Byte]
 			
-		5. //从某个高度开始（包含这个高度）的所有块取出来，h：开始的高度，h 必须大于0，高度是从1开始
+		5. 从某个高度开始（包含这个高度）的所有块取出来，h：开始的高度，h 必须大于0，高度是从1开始
 		
-		   //limits 返回块的数量，默认值为0，如果大于0，返回指定数量的块，如果块数小于该值返回实际数量
+		   limits 返回块的数量，默认值为0，如果大于0，返回指定数量的块，如果块数小于该值返回实际数量
 		
-		   //默认最多1000条::
+		   默认最多1000条::
 		
 			def getBlocksFromHeight(h:Int,limits:Int):Array[Array[Byte]]
 		
-		6. //根据高度获取block::
+		6. 根据高度获取block::
 		
 			def getBlocksFromHeight(h:Int):Array[Array[Byte]]
 			
-		7. //根据高度获取多个Block::
+		7. 根据高度获取多个Block::
 		
 			def getBlocks4ObjectFromHeight(h:Int,limits:Int):Array[Block]
 			
-		8. //根据高度获取所有Block::
+		8. 根据高度获取所有Block::
 		
 			def getBlocks4ObjectFromHeight(h:Int):Array[Block]
 			
-		9. //根据链的高度来获取等于这个高度值的block::
+		9. 根据链的高度来获取等于这个高度值的block::
 		
 			def getBlock4ObjectByHeight(h:Long):Block
 			
-		10. //获取区块链信息::
+		10. 获取区块链信息::
 		
 			def getBlockChainInfo():BlockchainInfo
 			
-		11. //返回成功写入的块数，写入多个区块::
+		11. 返回成功写入的块数，写入多个区块::
 		
 			def  restoreBlocks(blocks:Array[Block]):Int
 			
-		12. //写入单个区块::
+		12. 写入单个区块::
 		
 			def  restoreBlock(block:Block):Boolean
 			
-  		13. //获取链码的高度::
+  		13. 获取链码的高度::
 		
 			def getBlockHeight():Long
 			
-		14. //获取系统的所有交易数量::
+		14. 获取系统的所有交易数量::
 		
 			def getBlockAllTxNumber():Long
 			
-		15. //获取当前的区块文件编号::
+		15. 获取当前的区块文件编号::
 		
 			def getMaxFileNo():Int
 		
