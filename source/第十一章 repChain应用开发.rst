@@ -50,7 +50,14 @@ repChain应用开发
 	上述目标应用系统基于Nodejs及其相关开源组件进行客户端各功能模块的开发，其底层区块链网络基于已有的许可类型区块链平台Repchain来构建，
 	并使用javascript或者scala编写智能合约。该目标应用目前主要包括以下功能模块：
 
-	* 应用客户端：
+
+	.. image:: ./images/chapter11/sys_module.png
+	   :height: 487
+	   :width: 1464
+	   :scale: 50
+	   :alt: 系统模型
+
+        * 应用客户端：
 
 		* 用户账户管理
 		* 图片版权登记
@@ -60,14 +67,6 @@ repChain应用开发
 		* 图片版权保护智能合约
 		* 用户注册方法
 		* 图片版权登记方法
-
-	.. image:: ./images/chapter11/sys_module.png
-	   :height: 487
-	   :width: 1464
-	   :scale: 50
-	   :alt: 系统模型
-
-
 
 	.. image:: ./images/chapter11/app_architecture.png
 	   :height: 749
