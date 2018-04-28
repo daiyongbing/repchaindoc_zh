@@ -13,7 +13,7 @@
 
 	**系统创建过程为：**
 
-	1. 根据需求创建单机单实例Repchain_Single，或者单机多实例Repchain。
+	1. 根据需求创建单机单实例RepChain_Single，或者单机多实例RepChain。
 	2. 根据1的需求创建指定数量的ClusterSystem实例。
 	3. 通过ClusterSystem实例按照配置创建需要的API模块实例、分析统计模块实例、组网模块实例和应用模块管理实例。
 	4. 应用模块继续构建各应用组件。
@@ -101,7 +101,7 @@
 	   :scale: 50
 	   :alt: 
 	   
-	**ClusterSystem:** 主要负责系统初始化（配置信息加载）、创建系统实例，并根据配置加入区块链分布式网络；按需构建API实例；启动Repchain系统并实例化各上层功能模块。
+	**ClusterSystem:** 主要负责系统初始化（配置信息加载）、创建系统实例，并根据配置加入区块链分布式网络；按需构建API实例；启动RepChain系统并实例化各上层功能模块。
 
 	**SystemProfile:** 加载系统用相关参数数据（从配置中加载）
 
@@ -113,7 +113,7 @@
 
 	**ActorRegister:** actor引用的注册中心。主要为了在系统内部获得actor引用，进行消息传输。
 
-	**ClusterHelper:** 实现akka和repchain分布式网络相关的接口实现。
+	**ClusterHelper:** 实现akka和RepChain分布式网络相关的接口实现。
 
 	**BlockerHelper:** 实现与区块相关的辅助功能接口实现。
 
@@ -130,7 +130,7 @@
 	a. 初始化系统及应用配置信息。主要针对配置文件整合。
 	b. 根据需求加入分布式集群网络。
 	c. 根据需求开启API接口模块。
-	d. 启动repchain系统
+	d. 启动RepChain系统
 	e. 启动EventServer
 	f. 启动StatisticCollection
 	g. 启动MemberListener。

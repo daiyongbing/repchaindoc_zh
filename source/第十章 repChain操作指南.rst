@@ -1,10 +1,10 @@
-repChain操作指南
+RepChain操作指南
 ===========================
 
 10.1 安装
 -------------
 
-	* git clone https://gitee.com/chen4w/repchain
+	* git clone https://gitee.com/chen4w/RepChain
 	* install jdk8+
 	* install python
 	* install Scala
@@ -75,21 +75,21 @@ repChain操作指南
 10.4.1 Linux
 ++++++++++++++++
 
-	1)git clone https://gitee.com/chen4w/repchain.git
+	1)git clone https://gitee.com/chen4w/RepChain.git
 
 	.. image:: ./images/chapter10/gitclone.png
 	   :height: 250
 	   :width: 1464
 	   :scale: 50
-	   :alt: 获取repchain源码
+	   :alt: 获取RepChain源码
    
-	2)进入repchain目录（cd repchain），并执行sbt（sbt）
+	2)进入RepChain目录（cd RepChain），并执行sbt（sbt）
 
-	.. image:: ./images/chapter10/enterrepchain.png
+	.. image:: ./images/chapter10/enterRepChain.png
 	   :height: 216
 	   :width: 1465
 	   :scale: 50
-	   :alt: 进入repchain目录
+	   :alt: 进入RepChain目录
 
 	3)执行compile，根据build.sbt下载依赖包并编译（compile）
 
@@ -97,42 +97,42 @@ repChain操作指南
 	   :height: 254
 	   :width: 1465
 	   :scale: 50
-	   :alt: 编译repchain
+	   :alt: 编译RepChain
 	   
 	.. image:: ./images/chapter10/compiledone.png
 	   :height: 46
 	   :width: 1465
 	   :scale: 50
-	   :alt: 编译repchainc成功
+	   :alt: 编译RepChainc成功
 
 
-	4)修改build.sbt中mainClass in (Compile, packageBin) := Some("rep.app.Repchain")的类名，并执行assembly命令打包（assembly）
+	4)修改build.sbt中mainClass in (Compile, packageBin) := Some("rep.app.RepChain")的类名，并执行assembly命令打包（assembly）
 
 	.. image:: ./images/chapter10/assembly.png
 	   :height: 1217
 	   :width: 1465
 	   :scale: 50
-	   :alt: 打包repchain
+	   :alt: 打包RepChain
 
 	.. image:: ./images/chapter10/assembly2.png
 	   :height: 926
 	   :width: 1465
 	   :scale: 50
-	   :alt: 打包repchain
+	   :alt: 打包RepChain
 	   
-	从截图中可以看到打包命令执行成功，jar包输出在repchain/target/scala-2.11/repchain.jar
+	从截图中可以看到打包命令执行成功，jar包输出在RepChain/target/scala-2.11/RepChain.jar
 
 	5)把jar包，相关的配置文件放到同一个目录下
 
-	.. image:: ./images/chapter10/packrepchain.png
+	.. image:: ./images/chapter10/packRepChain.png
 	   :height: 93
 	   :width: 1465
 	   :scale: 50
 	   :alt: 集成配置文件
 
-	6)当前目录下执行命令:java -Dlogback.configurationFile=conf/logback.xml -jar repchain.jar
+	6)当前目录下执行命令:java -Dlogback.configurationFile=conf/logback.xml -jar RepChain.jar
 
-	.. image:: ./images/chapter10/executerepchain.png
+	.. image:: ./images/chapter10/executeRepChain.png
 	   :height: 480
 	   :width: 1465
 	   :scale: 50
@@ -140,11 +140,11 @@ repChain操作指南
 	   
 	7)浏览器输入http://localhost:8081/web/g1.html
 
-	.. image:: ./images/chapter10/repchain_view.png
+	.. image:: ./images/chapter10/RepChain_view.png
 	   :height: 716
 	   :width: 1465
 	   :scale: 50
-	   :alt: repchain可视化界面
+	   :alt: RepChain可视化界面
 
 	8)浏览器输入http://localhost:8081/swagger/index.html
 
@@ -162,7 +162,7 @@ repChain操作指南
 	3. compile to generate protobuf scala class. 执行compile命令编译
 	4. eclipse to generate eclipse project settings.
 	5. open scala IDE, File->Import->Existing Projects into Workspace。导入编辑器
-	6. right click rep.app.Repchain.scala,Run As->Scala Application(单机组网5个节点)
+	6. right click rep.app.RepChain.scala,Run As->Scala Application(单机组网5个节点)
 	7. Run configuration 配置VM参数 -Dlogback.configurationFile=conf/logback.xml (使logback配置生效)
 	8. view realtime graph http://localhost:8081/web/g1.html
 	9. view rest apis http://localhost:8081/swagger/index.html
@@ -181,12 +181,12 @@ repChain操作指南
 	1. 单机多节点部署：在一台机器启动一个实例，该实例中包含多个区块链对等节点。
 	2. 多机多节点部署：在一台或者多台机器上启动多个实例，每个实例就是一个区块链对等节点。
 
-	系统在运行时，IDE环境中需要配置VM参数 -Dlogback.configurationFile=conf/logback.xml (使logback配置生效)。运行jar包时需要指定参数java -Dlogback.configurationFile= conf/logback.xml-jar repchain.jar
+	系统在运行时，IDE环境中需要配置VM参数 -Dlogback.configurationFile=conf/logback.xml (使logback配置生效)。运行jar包时需要指定参数java -Dlogback.configurationFile= conf/logback.xml-jar RepChain.jar
 
 10.6.1单机多节点部署
 ++++++++++++++++++++++
 
-	单机多节点部署运行的Main类是:rep.aap.Repchain.scala 可以在文件里面设置运行节点的个数默认（4/5）
+	单机多节点部署运行的Main类是:rep.aap.RepChain.scala 可以在文件里面设置运行节点的个数默认（4/5）
 
 	Conf/Store.properties设置存储路径，一般默认
 	
@@ -202,7 +202,7 @@ repChain操作指南
 10.6.2 多机多节点部署
 ++++++++++++++++++++++++
 
-	多机多节点部署运行的Main类是:rep.aap.Repchain_Single.scala
+	多机多节点部署运行的Main类是:rep.aap.RepChain_Single.scala
 
 	Conf/Store.properties设置存储路径，一般默认
 	
@@ -221,5 +221,5 @@ repChain操作指南
 
 	其余的默认即可，如有需要自行修改。最后可以在IDE中运行RepChain或者运行已经打好的jar包。
 
-	另：单机节点在运行时需要在后面加参数来区分节点，如java -Dlogback.configurationFile=conf/logback.xml -jar repchain.jar 1。1用来唯一标志该节点
+	另：单机节点在运行时需要在后面加参数来区分节点，如java -Dlogback.configurationFile=conf/logback.xml -jar RepChain.jar 1。1用来唯一标志该节点
 	再次强调节点必须一个一个运行，一个启动后再启动另一个，leader节点最先启动。

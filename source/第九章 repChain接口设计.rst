@@ -1,4 +1,4 @@
-repChain接口设计
+RepChain接口设计
 ==================
 
 9.1 外部接口
@@ -9,12 +9,12 @@ repChain接口设计
 
 	外部接口包括三类：
 
-	* repChain各个节点之间的接口
+	* RepChain各个节点之间的接口
 
-		repChain作为去中心化的分布式网络，各网络节点之间通过消息相互作用。
+		RepChain作为去中心化的分布式网络，各网络节点之间通过消息相互作用。
 		
-	* repChain为第三方应用提供的restful API
-	* repChain为第三方应用提供的Event事件流
+	* RepChain为第三方应用提供的restful API
+	* RepChain为第三方应用提供的Event事件流
 
 	三类接口交互示意图如下：
 
@@ -27,7 +27,7 @@ repChain接口设计
 9.1.2 消息交互
 +++++++++++++++++++
 
-	消息交互在repChain网络节点之间进行，消息格式采用protobuf定义，以protobuf序列化字节流的形态，在akka Cluster中传播。
+	消息交互在RepChain网络节点之间进行，消息格式采用protobuf定义，以protobuf序列化字节流的形态，在akka Cluster中传播。
 
 	消息的传播形式既可以是Sub／Pub，也可以是P2P。目前的实现采用Sub/Pub。
 
