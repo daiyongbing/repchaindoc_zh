@@ -270,7 +270,7 @@
 	.. image:: ./images/chapter4/实时图.png
            :scale: 50
            :height: 1153
-           :width: 1387
+           :width: 2387
            :alt: 消息流
 
 	有以下几个topic：
