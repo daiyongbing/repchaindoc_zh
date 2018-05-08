@@ -203,20 +203,20 @@ RepChain应用开发
 ++++++++++++++++++++++
 
 	.. image:: ./images/chapter11/register.png
-	   :height: 2005
-	   :width: 1280
+	   :height: 859
+	   :width: 1465
 	   :scale: 50
 	   :alt: 用户注册
 	   
 	.. image:: ./images/chapter11/importcertificate.png
-	   :height: 2005
-	   :width: 1280
+	   :height: 851
+	   :width: 1465
 	   :scale: 50
 	   :alt: 导入证书文件
 	   
 	.. image:: ./images/chapter11/usermanage.png
-	   :height: 2005
-	   :width: 1280
+	   :height: 861
+	   :width: 1464
 	   :scale: 50
 	   :alt: 用户管理
 	   
@@ -224,14 +224,14 @@ RepChain应用开发
 	+++++++++++++++++++
 
 	.. image:: ./images/chapter11/picstore.png
-	   :height: 2005
-	   :width: 1280
+	   :height: 816
+	   :width: 1464
 	   :scale: 50
 	   :alt: 图片存证
 	   
 	.. image:: ./images/chapter11/mypic.png
-	   :height: 2005
-	   :width: 1280
+	   :height: 1066
+	   :width: 1465
 	   :scale: 50
 	   :alt: 图片存证
 	   

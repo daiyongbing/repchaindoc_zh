@@ -37,10 +37,10 @@ RepChain接口设计
 	系统提供restful API供UI及第三方App调用，api文档以swagger UI方式提供online try。
 	   
 	.. image:: ./images/chapter9/restful_api.png
-	   :height: 501
-	   :width: 1465
+	   :height: 917
+	   :width: 1464
 	   :scale: 50
-	   :alt: 消息交互
+	   :alt: swagger-UI接口
 	   
 	API的实现采用akka http dsl的route机制，为了支持swagger-UI，引入swagger-akka-http。
 

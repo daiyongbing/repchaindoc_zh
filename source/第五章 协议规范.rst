@@ -22,6 +22,8 @@
 	**系统各组成部分参与主流程的相互关系如下图：**
 
 	.. image:: ./images/chapter5/pic2.png
+	   :height: 966
+	   :width: 1460
 	   :scale: 50
 	   :alt: 系统各组成部分参与主流程的相互关系
 
@@ -39,6 +41,8 @@
 --------------------
 
 	.. image:: ./images/chapter5/pic3.png
+	   :height: 977
+	   :width: 1451
 	   :scale: 50
 	   :alt: 协议调度过程
 

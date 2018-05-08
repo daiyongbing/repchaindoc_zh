@@ -105,11 +105,11 @@
 4.3.1 可视化
 +++++++++++++++
 
-.. image:: ./images/chapter4/4.3.1.png
-   :scale: 50
-   :height: 1153
-   :width: 1387
-   :alt: 消息流
+	.. image:: ./images/chapter4/4.3.1.png
+	   :scale: 50
+	   :height: 1416
+	   :width: 1465
+	   :alt: 消息流
 
 4.3.2 问题
 ++++++++++++++++
@@ -264,15 +264,15 @@
 
 4.8.1 实时图
 ++++++++++++++++
-	实时图显示了每个节点peer之间的动态关系，发生交易、背书，出块等动作，可以实时的显示出每一步流程，使得节点之间的资产转移可以直观的进行显示。		访问网址： http://localhost:8081/web/g1.html
+	实时图显示了每个节点peer之间的动态关系，发生交易、背书，出块等动作，可以实时的显示出每一步流程，使得节点之间的资产转移可以直观的进行显示。
+	访问网址： http://localhost:8081/web/g1.html
 	
-
 	.. image:: ./images/chapter4/实时图.png
-           :scale: 50
-           :height: 1153
-           :width: 2387
-           :alt: 消息流
-
+		   :scale: 50
+		   :height: 668
+		   :width: 1462
+		   :alt: 可视化界面
+	
 	有以下几个topic：
 	
 	RepChain：统计交易节点的个数；
@@ -285,27 +285,29 @@
 	
 	Sync：当新加入的节点跟已有节点区块高度不一致时发出同步请求。
 	
-	其中，红曲线表示发出请求，绿直线表示响应请求。Peer颜色代表代表不同类型的节点，比如候选节点、代理节点和展示节点。Peer向topic的指向代表订阅关	    系，在向topic发送消息时用延时线条表示，同时peer之间发送消息时也用延时线条表示。这些动态可以直观地将交易打包过程、背书共识过程、出块广播过程         展示出来。
+	其中，红曲线表示发出请求，绿直线表示响应请求。Peer颜色代表代表不同类型的节点，比如候选节点、代理节点和展示节点。Peer向topic的指向代表订阅关系，在向topic发送消息时用延时线条表示，
+	同时peer之间发送消息时也用延时线条表示。这些动态可以直观地将交易打包过程、背书共识过程、出块广播过程展示出来。
 	
 	以d3.js的force layout可以实现如下图效果：
 
-        .. image:: ./images/chapter4/d3.png
-           :scale: 50
-  	   :height: 1153
-           :width: 1387
-           :alt: 消息流
-   
+	.. image:: ./images/chapter4/d3.png
+	   :scale: 50
+	   :height: 1388
+	   :width: 1465
+	   :alt: force layout
+	
    其中c0为中心点（fixed），c1～cn为沿圆周自动均匀分布的集群入网节点。t1~t2为订阅主题（fixed），c1-t1，c3-t1为不参与force layout的圆弧带箭头连接。
 
 4.8.2 Swagger-UI
 ++++++++++++++++
 	Swagger是一个Restful风格接口的文档在线自动生成和测试的框架。原理是Swagger-ui读取的数据来源于/v2/api-docs，并且返回的是json数据。所以只要自己写一个页面去解析json数据，并展现就可以实现自定义swagger的UI界面了。										访问网址： http://localhost:8081/swagger/index.html
- 
-        .. image:: ./images/chapter4/Swagger-UI.png
-           :scale: 50
-  	   :height: 1153
-           :width: 1387
-           :alt: 消息流
+	
+	.. image:: ./images/chapter4/Swagger-UI.png
+	   :scale: 50
+	   :height: 917
+	   :width: 1464
+	   :alt: Swagger-UI
+	   
 	
 	使用方式：
 	
