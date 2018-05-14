@@ -167,13 +167,178 @@ RepChain操作指南
 	8. view realtime graph http://localhost:8081/web/g1.html
 	9. view rest apis http://localhost:8081/swagger/index.html
 
-10.5.系统测试
+10.5 修改配置
+-------------------
+
+10.5.1 Keytool工具使用
++++++++++++++++++++++++++
+
+	RepChain中目前预置了密钥对和证书，如果用户想自己生成，可以采用keytool工具生成密钥对，导出证书，并形成证书信任列表，下面在Winsows下详细进行说明。
+
+	**(1) keytool简介**
+	
+	keytool 是jdk自带的密钥和证书管理工具，它使用户能够管理自己的公钥、私钥对及相关证书，用于通过数字签名自我认证。在JDK 1.4以后的版本中都包含了这一工具，它的位置为%JAVA_HOME%\bin\keytool.exe，如下图所示是keytool工具。
+	
+	.. image:: ./images/chapter10/keytools.png
+	   :height: 635
+	   :width: 1238
+	   :scale: 50
+	   :alt: keytools
+	
+	.
+	
+	**keytool用法：**
+	
+	.. image:: ./images/chapter10/HowToUseKeytool.png
+	   :height: 825
+	   :width: 1178
+	   :scale: 50
+	   :alt: keytools使用方法
+
+.
+	   
+	**(2) 创建证书：**
+	
+	创建证书主要是使用" -genkeypair"，该命令的可用参数如下：
+	
+	.. image:: ./images/chapter10/CreateKeystore.png
+	   :height: 843
+	   :width: 1204
+	   :scale: 50
+	   :alt: 创建证书
+	
+	.
+	
+	这里给出一个范例：生成一个test证书：
+	
+	.. code-block:: shell
+	   :linenos:
+	   
+	   keytool -genkeypair -alias "test" -keyalg "RSA" -keystore "test.keystore"
+	
+	**功能：**
+	
+	创建一个别名为test的证书，该证书存放在名为test.keystore的密钥库中，若test.keystore密钥库不存在则创建。
+	
+	参数说明：
+	
+	* genkeypair：生成一对非对称密钥；
+	* alias：指定密钥对的别名，该别名是公开的；
+	* keyalg：指定加密算法，本例中的采用通用的RAS加密算法；
+	* keystore：密钥库的路径及名称，不指定的话，默认在操作系统的用户目录下生成一个".keystore"的文件。
+	
+	再输入命令之后，如下图所示，必选项是密码和域名，其他可以不填。
+	
+	**注意：**
+	
+	1. 密钥库的密码至少必须六个字符，包含字母和数字。
+	2. 名字与姓氏应该是输入的域名。
+	
+	.. image:: ./images/chapter10/CreateKeystoreExp.png
+	   :height: 763
+	   :width: 1090
+	   :scale: 50
+	   :alt: 创建证书示例
+	
+	.
+	
+	执行完上述命令后，在操作系统的用户目录下生成了一个"test.keystore"的文件，如下图所示：
+	
+	.. image:: ./images/chapter10/test_keystore.png
+	   :height: 497
+	   :width: 1219
+	   :scale: 50
+	   :alt: 已创建的test证书
+	
+	.
+	
+	查看密钥库的证书：这里给出一个范例，查看test.keystore这个密码库中所有的证书。
+	
+	.. code-block:: shell
+	   :linenos:
+	   
+	   keytool -list -keystore test.keystore
+	
+	.. image:: ./images/chapter10/ViewKeystore.png
+	   :height: 754
+	   :width: 1077
+	   :scale: 50
+	   :alt: 查看密钥库证书
+	   
+	.
+	
+	**(3) 导出证书：**
+	
+	范例：将名为test.keystore的证书库中别名为test的证书条目导出到证书文件test.crt或test.cer中：
+	
+	.. code-block:: shell
+	   :linenos:
+	   
+	   keytool -export -alias test -file test.crt -keystore test.keystore
+	   keytool -export -alias test -file test.cer -keystore test.keystore
+		
+	.. image:: ./images/chapter10/ExportKeystore.png
+	   :height: 747
+	   :width: 1067
+	   :scale: 50
+	   :alt: 导出证书
+	
+	.
+	
+	运行结果：在操作系统的用户目录下生成了一个"test.crt"和"test.cer"的文件，如下图所示：
+	
+	.. image:: ./images/chapter10/ExportKeystoreResult.png
+	   :height: 643
+	   :width: 1364
+	   :scale: 50
+	   :alt: 导出证书结果
+	
+	.
+	
+	**(4) 导入证书：**
+		
+	范例：将证书文件test.cer导入到名为test_cacerts的证书库中：
+	
+	.. code-block:: shell
+	   :linenos:
+	   
+	   keytool -import -keystore test_cacerts -file test.cer
+	
+	.. image:: ./images/chapter10/ImportKeystore.png
+	   :height: 815
+	   :width: 1126
+	   :scale: 50
+	   :alt: 导入证书
+	  
+	.
+	
+	用户可以通过以上操作，生成密钥和证书，作为RepChain在身份认证过程中需要的证明，在形成信任列表之后即可使用。
+	
+10.5.2 最低配置
+++++++++++++++++
+
+	在此给出最低配置的说明：
+	
+	.. image:: ./images/chapter10/RowestConf.png
+	   :height: 461
+	   :width: 1464
+	   :scale: 50
+	   :alt: 最低配置
+	   
+5.3创世块制作
++++++++++++++++++++++
+
+	源码内rep.utils.GensisBuilder组件用于生成创世块json文件，该json文件可以在链初始化时由节点加载，统一网络内节点加载的创世块必须相同。
+	在创世块中的交易发起人为该节点的超级管理员，预置资产管理合约。创世块中预置deploy基础方法的交易，deploy用来部署合约，创世块中的交易发起人是超级管理员，预置资产管理合约，
+	然后创世块出块：Gensis Block，并载入账本。
+	
+10.6 系统测试
 -----------------
 
 	* 单机多节点测试
 	* 多机多节点测试
 
-10.6.系统运行
+10.7 系统运行
 ---------------
 
 本系统可以分为2种方式部署：
@@ -183,7 +348,7 @@ RepChain操作指南
 
 	系统在运行时，IDE环境中需要配置VM参数 -Dlogback.configurationFile=conf/logback.xml (使logback配置生效)。运行jar包时需要指定参数java -Dlogback.configurationFile= conf/logback.xml-jar RepChain.jar
 
-10.6.1单机多节点部署
+10.7.1单机多节点部署
 ++++++++++++++++++++++
 
 	单机多节点部署运行的Main类是:rep.aap.RepChain.scala 可以在文件里面设置运行节点的个数默认（4/5）
@@ -199,7 +364,7 @@ RepChain操作指南
 	
 	最后可以在IDE中运行RepChain或者运行已经打好的jar包。
 
-10.6.2 多机多节点部署
+10.7.2 多机多节点部署
 ++++++++++++++++++++++++
 
 	多机多节点部署运行的Main类是:rep.aap.RepChain_Single.scala
